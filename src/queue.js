@@ -16,20 +16,7 @@ const { ListNode } = require('../extensions/list-node.js');
 class Queue {
 
   getUnderlyingList() {
-    let i = 0
-    let next = this.queue?.[i+1];
-    let prev = this.queue?.[i];
-    const result = {};
-    if (prev) {
-      result.value = prev;
-    }
-
-    while (next) {
-      prev.next = next
-      next = this.queue?.[i+2];
-      prev = this.queue?.[i+1];
-    }
-    return result;
+    return this.list;
 
   }
 
@@ -37,8 +24,13 @@ class Queue {
     if (this.queue) {
       const listNode = new ListNode(value)
       this.queue.push(listNode);
+      this.prev.next = listNode;
+      this.prev = listNode;
+
     } else {
-      this.queue = [{value}];
+      const listNode = new ListNode(value)
+      this.prev = listNode;
+      this.queue = [listNode];
     }
   }
 
